@@ -1,13 +1,14 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "DoneWithIt",
     "slug": "DoneWithIt",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./app/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./app/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,16 +16,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mattmsun.DoneWithIt"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mattmsun.DoneWithIt"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": ".app/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85f97283-c03a-41f3-b4b2-97a14feb8b5a"
+      }
     }
   }
 }
