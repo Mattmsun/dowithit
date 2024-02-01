@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { StyleSheet } from "react-native";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 const ListItem = ({ image, title, subTitle, onPress, renderRightActions }) => {

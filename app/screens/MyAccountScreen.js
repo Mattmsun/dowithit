@@ -4,7 +4,7 @@ import Screen from "../components/Screen";
 import colors from "../config/colors";
 import IconListItem from "../components/IconListItem";
 import { StyleSheet, View } from "react-native";
-import ListItemSeparator from "../components/ListItemSeparator";
+import ListItemSeparator from "../components/lists/ListItemSeparator";
 const MyAccountScreen = () => {
   return (
     <Screen extraStyle={{ backgroundColor: colors.light }}>

@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../components/Card";
 import { View } from "react-native";
 
-import ListItem from "../components/ListItem";
+import ListItem from "../components/lists/ListItem";
 const ListDetailScreen = () => {
   return (
     <View>
