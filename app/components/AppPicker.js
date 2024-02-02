@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  TextInput,
-  Platform,
   TouchableWithoutFeedback,
   Modal,
   Button,
@@ -17,17 +15,20 @@ import Screen from "./Screen";
 import PickerItem from "./PickerItem";
 
 const AppPicker = ({
+  size,
   icon,
+  numberOfColumns = 1,
   items,
   selectedItem,
   placeholder,
+  PickerItemComponent = PickerItem,
   onSelectItem,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-        <View style={styles.container}>
+        <View style={[styles.container, { width: size }]}>
           {icon && (
             <MaterialCommunityIcons
               name={icon}
@@ -56,10 +57,12 @@ const AppPicker = ({
             onPress={() => setModalVisible(!modalVisible)}
           />
           <FlatList
+            numColumns={numberOfColumns}
             data={items}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
-              <PickerItem
+              <PickerItemComponent
+                item={item}
                 label={item.label}
                 onPress={() => {
                   setModalVisible(false);
