@@ -11,11 +11,11 @@ import {
   SafeAreaView,
   Dimensions,
   useWindowDimensions,
+  Button,
 } from "react-native";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import ViewImageScreen from "./app/screens/ViewImageScreen";
 import colors from "./app/config/colors";
-import Button from "./app/components/Button";
 import ListDetailScreen from "./app/screens/ListDetailScreen";
 import Card from "./app/components/Card";
 import MessageScreen from "./app/screens/MessageScreen";
@@ -24,11 +24,30 @@ import ListScreen from "./app/screens/ListScreen";
 import AppTextInput from "./app/components/AppTextInput";
 import Screen from "./app/components/Screen";
 import AppPicker from "./app/components/AppPicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginScreen from "./app/screens/LoginScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import ListingEditScreen from "./app/screens/ListingEditScreen";
 
+import * as ImagePicker from "expo-image-picker";
+import { Camera } from "expo-camera";
+import ImageInput from "./app/components/ImageInput";
+import ImageInputList from "./app/components/ImageInputList";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import IconAvatar from "./app/components/IconAvatar";
+import navigationTheme from "./app/navigation/navigationTheme";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import AppNavigator from "./app/navigation/AppNavigator";
+
 export default function App() {
-  return <ListingEditScreen />;
+  return (
+    <NavigationContainer theme={navigationTheme}>
+      {/* <AuthNavigator /> */}
+      <AppNavigator />
+    </NavigationContainer>
+  );
 }

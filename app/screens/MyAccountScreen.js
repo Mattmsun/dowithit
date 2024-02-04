@@ -3,9 +3,10 @@ import SimpleListItem from "../components/SimpleListItem";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import IconListItem from "../components/IconListItem";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
-const MyAccountScreen = () => {
+import routes from "../navigation/routes";
+const MyAccountScreen = ({ navigation }) => {
   return (
     <Screen extraStyle={{ backgroundColor: colors.light }}>
       <SimpleListItem
@@ -20,11 +21,15 @@ const MyAccountScreen = () => {
           iconBg={colors.primary}
         />
         <ListItemSeparator />
-        <IconListItem
-          iconName="email"
-          title="My Messages"
-          iconBg={colors.secondary}
-        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate(routes.MESSAGE, { id: 1 })}
+        >
+          <IconListItem
+            iconName="email"
+            title="My Messages"
+            iconBg={colors.secondary}
+          />
+        </TouchableOpacity>
       </View>
       <IconListItem iconName="logout" title="Log Out" iconBg={colors.warning} />
     </Screen>
