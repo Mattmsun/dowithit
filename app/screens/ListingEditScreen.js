@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import Screen from "../components/Screen";
-
 import * as Yup from "yup";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
@@ -9,6 +8,10 @@ import AppFormPicker from "../components/forms/AppFormPicker";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import useLocation from "../hooks/useLocation";
+import useApi from "../hooks/useApi";
+import listingApi from "../api/listing";
+import UploadScreen from "./UploadScreen";
+import LottieView from "lottie-react-native";
 
 const validationSchema = Yup.object().shape({
   images: Yup.array().min(1, "Please select at least one image"),
@@ -42,10 +45,32 @@ const categories = [
   },
 ];
 const ListingEditScreen = () => {
-  // const location = useLocation();
+  const location = useLocation();
+
+  const [upload, setUpload] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const handleSubmit = async (values, { resetForm }) => {
+    setProgress(0);
+    setUpload(true);
+    const result = await listingApi.postListing(
+      { ...values, location },
+      (progress) => setProgress(progress)
+    );
+
+    if (!result.ok) {
+      setUpload(false);
+      return alert("Could not save the listing.");
+    }
+    resetForm();
+  };
 
   return (
     <Screen extraStyle={styles.container}>
+      <UploadScreen
+        onFinish={() => setUpload(false)}
+        progress={progress}
+        visible={upload}
+      />
       <AppForm
         initialValues={{
           images: [],
@@ -54,9 +79,7 @@ const ListingEditScreen = () => {
           category: undefined,
           description: "",
         }}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker name={"images"} />

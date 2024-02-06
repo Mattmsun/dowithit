@@ -9,8 +9,8 @@ const ListDetailScreen = ({ route }) => {
     <View>
       <Card
         title={listing.title}
-        subtitle={`$ ${listing.subtitle}`}
-        image={listing.image}
+        subtitle={`$ ${listing.price}`}
+        imageUrl={listing.images[0].url}
         extraStyle={{ overflow: "visible", height: "60%" }}
       />
 

@@ -3,11 +3,11 @@ import { Image, Text, TouchableWithoutFeedback, View } from "react-native";
 import { StyleSheet } from "react-native";
 import colors from "../config/colors";
 
-const Card = ({ title, subtitle, image, extraStyle, onPress }) => {
+const Card = ({ title, subtitle, imageUrl, extraStyle, onPress }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={{ ...styles.cardContainer, ...extraStyle }}>
-        <Image style={styles.image} source={image} />
+        <Image style={styles.image} source={{ uri: imageUrl }} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "70%",
+    height: "60%",
   },
   title: {
     fontSize: 18,
