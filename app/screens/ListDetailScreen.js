@@ -3,6 +3,7 @@ import Card from "../components/Card";
 import { View } from "react-native";
 
 import ListItem from "../components/lists/ListItem";
+
 const ListDetailScreen = ({ route }) => {
   const listing = route.params;
   return (
