@@ -9,14 +9,13 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./app/assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-    
       "supportsTablet": true,
       "bundleIdentifier": "com.mattmsun.DoneWithIt"
     },
@@ -34,6 +33,9 @@
       "eas": {
         "projectId": "85f97283-c03a-41f3-b4b2-97a14feb8b5a"
       }
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

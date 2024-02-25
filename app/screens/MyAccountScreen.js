@@ -6,12 +6,16 @@ import IconListItem from "../components/IconListItem";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
 import routes from "../navigation/routes";
+import useAuth from "../auth/useAuth";
+
 const MyAccountScreen = ({ navigation }) => {
+  const { user, logout } = useAuth();
+
   return (
     <Screen extraStyle={{ backgroundColor: colors.light }}>
       <SimpleListItem
-        title="Mosh"
-        subTitle="mattmsun@gmail.com"
+        title={user.name}
+        subTitle={user.email}
         image={require("../assets/mosh.jpg")}
       />
       <View style={{ paddingTop: 40, paddingBottom: 20 }}>
@@ -31,7 +35,13 @@ const MyAccountScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-      <IconListItem iconName="logout" title="Log Out" iconBg={colors.warning} />
+      <TouchableOpacity onPress={logout}>
+        <IconListItem
+          iconName="logout"
+          title="Log Out"
+          iconBg={colors.warning}
+        />
+      </TouchableOpacity>
     </Screen>
   );
 };

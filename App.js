@@ -24,7 +24,7 @@ import ListScreen from "./app/screens/ListScreen";
 import AppTextInput from "./app/components/AppTextInput";
 import Screen from "./app/components/Screen";
 import AppPicker from "./app/components/AppPicker";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import LoginScreen from "./app/screens/LoginScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import ListingEditScreen from "./app/screens/ListingEditScreen";
@@ -46,27 +46,52 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import NetInfo, { useNetInfo } from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import OfflineNotice from "./app/components/OfflineNotice";
+import AuthContext from "./app/auth/context";
+import authStorage from "./app/auth/storage";
+
+import * as SplashScreen from "expo-splash-screen";
+import ActivityIndicator from "./app/components/ActivityIndicator";
 
 export default function App() {
-  const demo = async () => {
-    try {
-      await AsyncStorage.setItem("person", JSON.stringify({ id: 1 }));
-      const value = await AsyncStorage.getItem("person");
-      const person = JSON.parse(value);
-      console.log(person);
-    } catch (error) {
-      console.log(error);
-    }
+  const [user, setUser] = useState();
+  const [appIsReady, setAppIsReady] = useState(false);
+  const restoreUser = async () => {
+    const user = await authStorage.getUser();
+    if (user) setUser(user);
   };
-  const netInfo = useNetInfo();
 
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await restoreUser();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
   return (
-    <>
-      <OfflineNotice />
-      <NavigationContainer theme={navigationTheme}>
-        {/* <AuthNavigator /> */}
-        <AppNavigator />
-      </NavigationContainer>
-    </>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <OfflineNotice />
+        <NavigationContainer theme={navigationTheme}>
+          {user ? <AppNavigator /> : <AuthNavigator />}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </View>
   );
 }

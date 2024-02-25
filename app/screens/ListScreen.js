@@ -24,33 +24,35 @@ const ListScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <Screen extraStyle={{ backgroundColor: colors.light, padding: 20 }}>
-      {error && (
-        <>
-          <AppText>We are facing a problem...</AppText>
-          <Button title="Retry" onPress={loadListings} />
-        </>
-      )}
+    <>
       <ActivityIndicator visible={loading} />
-      <FlatList
-        data={listings}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Card
-            onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-            title={item.title}
-            subtitle={item.price}
-            imageUrl={item.images[0].url}
-            thumbnailUrl={item.images[0].thumbnailUrl}
-          />
+      <Screen extraStyle={{ backgroundColor: colors.light, padding: 20 }}>
+        {error && (
+          <>
+            <AppText>We are facing a problem...</AppText>
+            <Button title="Retry" onPress={loadListings} />
+          </>
         )}
-        ItemSeparatorComponent={() => (
-          <View style={{ width: "100%", height: 20 }} />
-        )}
-        refreshing={refreshing}
-        onRefresh={loadListings}
-      />
-    </Screen>
+        <FlatList
+          data={listings}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Card
+              onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+              title={item.title}
+              subtitle={item.price}
+              imageUrl={item.images[0].url}
+              thumbnailUrl={item.images[0].thumbnailUrl}
+            />
+          )}
+          ItemSeparatorComponent={() => (
+            <View style={{ width: "100%", height: 20 }} />
+          )}
+          // refreshing={refreshing}
+          // onRefresh={loadListings}
+        />
+      </Screen>
+    </>
   );
 };
 
